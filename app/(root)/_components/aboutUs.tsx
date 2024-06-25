@@ -5,9 +5,9 @@ const AboutUs = () => {
  return (
   <section className="container flex flex-col gap-8 lg:flex-row lg:gap-10 xl:gap-16 2xl:gap-20">
    <div className="flex-1 space-y-6">
-    <h3 className="text-2xl font-medium">درباره ما</h3>
+    <h3 className="text-lg font-medium lg:text-2xl">درباره ما</h3>
     <div>
-     <p className="text-base/7 text-gray-500">
+     <p className="text-sm/6 text-gray-500 lg:text-base/7">
       در دنیای پرشتاب امروزی، نیاز به تخصص در تعمیرات موبایل و لپ تاپ بیش از پیش
       احساس می‌شود.
       <br />
@@ -26,15 +26,15 @@ const AboutUs = () => {
     </div>
    </div>
    <div className="flex-1 space-y-6 lg:max-w-80">
-    <h3 className="text-2xl font-medium">تماس با ما</h3>
+    <h3 className="text-lg font-medium lg:text-2xl">تماس با ما</h3>
     <div className="w-full">
      <ul className="flex w-full flex-col flex-wrap gap-5 sm:flex-row lg:flex-col">
       <li>
        <a
         className="flex h-16 items-center justify-center rounded-full bg-emerald-500 px-8 text-lg font-medium text-gray-50"
-        href="tel:+982152851"
+        href="tel:02152851"
        >
-        021-52851 داخلی 565
+        021-52-851 داخلی 420
        </a>
       </li>
       <li dir="ltr">

@@ -9,8 +9,8 @@ import Hero from "@/app/(root)/_components/hero";
 
 const LandingPage = () => {
  return (
-  <main className="flex flex-col gap-32 pb-16">
-   <Intro />
+  <main className="flex flex-col gap-10 pb-16 lg:gap-32">
+   {/*<Intro />*/}
    <Hero />
    <Courses />
    <VideoCard />

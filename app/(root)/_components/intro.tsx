@@ -16,7 +16,7 @@ const Intro = () => {
    .to("span", { delay: 1, opacity: 1 })
    .to(".counter", {
     delay: 1,
-    scale: 10,
+    scale: 20,
     duration: 0.7,
     background: colors.gray["50"],
     ease: "expo.inOut",
@@ -44,7 +44,7 @@ const Intro = () => {
      {counter
       .toString()
       .split("")
-      .map((number, index) => (
+      .map((number, index, array) => (
        <AnimatePresence
         onExitComplete={() => animateOut()}
         initial={false}
@@ -52,7 +52,10 @@ const Intro = () => {
         key={index}
        >
         <motion.div
-         transition={{ duration: 0.3, type: "spring" }}
+         transition={{
+          duration: 0.6,
+          type: "spring",
+         }}
          exit={{ y: "-50%", opacity: 0 }}
          animate={{ y: 0, opacity: 1 }}
          initial={{ y: "50%", opacity: 0 }}

@@ -1,8 +1,6 @@
 "use client";
 import React, {
  CSSProperties,
- HTMLAttributes,
- PropsWithChildren,
  useEffect,
  useMemo,
  useRef,
@@ -14,14 +12,17 @@ import {
  COURSE_DETAIL_ATTRIBUTES,
  CourseProps,
  COURSES,
- CourseTabProps,
  CourseTabsName,
 } from "@/data/courses";
 import Image from "next/image";
-import { useGSAP } from "@gsap/react";
-import { gsap } from "@/libs/gsap";
 import { AnimatePresence, motion, Variants } from "framer-motion";
-import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
+import {
+ ChevronDownIcon,
+ ChevronUpIcon,
+ GraduationCapIcon,
+ HistoryIcon,
+ UserIcon,
+} from "lucide-react";
 
 export function Courses() {
  const [activeTab, setActiveTab] = useState(0);
@@ -42,9 +43,9 @@ export function Courses() {
  }
 
  return (
-  <section className="relative flex flex-col overflow-x-hidden">
+  <section className="relative flex flex-col overflow-hidden">
    <div className="container flex flex-col gap-8">
-    <div className="mx-auto max-w-96 rounded-full bg-gray-900 p-3 text-gray-50">
+    <div className="mx-auto max-w-full rounded-full bg-gray-900 p-3 text-gray-50 sm:max-w-96">
      <ScrollableArea className="select-none rounded-full">
       <div className="mx-auto flex w-max gap-2">
        {COURSES.map((course, index) => (
@@ -70,7 +71,6 @@ export function Courses() {
       </div>
      </ScrollableArea>
     </div>
-
     <AnimatePresence initial={false} mode="popLayout">
      <motion.div
       variants={variant}
@@ -80,6 +80,7 @@ export function Courses() {
       initial={"exit"}
       exit={"exit"}
       animate={"animate"}
+      className="w-full"
      >
       <CourseContainer course={activeCourse} />
      </motion.div>
@@ -89,179 +90,108 @@ export function Courses() {
  );
 }
 
-function CourseTabSelector({
- course,
- onChange,
- activeTab,
-}: {
- course: CourseProps;
- onChange: (index: number) => void;
- activeTab: CourseTabProps;
-}) {
- return (
-  <div className="me-auto h-14 max-w-xl rounded-full bg-gray-900 p-1.5 text-gray-50">
-   <ScrollableArea className="h-full rounded-full">
-    <div className="mx-auto flex h-full w-max">
-     {course.tabs.map((tab, index) => (
-      <button
-       onClick={() => onChange(index)}
-       key={tab.id}
-       className={cn(
-        "relative flex items-center justify-center gap-2 rounded-full px-5",
-       )}
-      >
-       {activeTab.id === tab.id && (
-        <motion.div
-         className="bg-primary absolute inset-0"
-         layoutId="root"
-         style={{ borderRadius: 50 }}
-         transition={{ duration: 0.7, type: "spring" }}
-        />
-       )}
-       <span className="relative">{tab.name}</span>
-      </button>
-     ))}
-    </div>
-   </ScrollableArea>
-  </div>
- );
-}
-
 function CourseContainer({ course }: CourseDetailsProps) {
  const [activeTab, setActiveTab] = useState(0);
- const [previousTab, setPreviousTab] = useState(0);
  const activeTabProps = course.tabs[activeTab];
 
- function switchTab(tabIndex: number) {
-  if (tabIndex === activeTab) return;
-  setActiveTab(() => tabIndex);
-  setPreviousTab(() => activeTab);
+ function CurrentTab() {
+  switch (activeTabProps.type) {
+   case CourseTabsName.INTRODUCTION: {
+    return (
+     <CourseIntroduction
+      body={activeTabProps.body}
+      logos={activeTabProps.logos}
+     />
+    );
+   }
+   case CourseTabsName.TEACHERS: {
+    return <CourseTeachers teacher={activeTabProps.teacher} />;
+   }
+   case CourseTabsName.CHAPTERS: {
+    return <CourseChapters chapters={activeTabProps.chapters} />;
+   }
+   case CourseTabsName.FAQ: {
+    return <CourseFAQ items={activeTabProps.items} />;
+   }
+  }
  }
 
  return (
-  <div className="rounded-7xl flex w-full gap-10 overflow-hidden bg-gray-100 p-10">
+  <div className="rounded-5xl lg:rounded-7xl flex w-full flex-col justify-between gap-10 overflow-hidden bg-gray-100 p-5 md:flex-row lg:p-10">
    <div className="flex flex-1 flex-col gap-8">
-    <CourseTabSelector
-     activeTab={activeTabProps}
-     onChange={switchTab}
-     course={course}
-    />
-    <div className="flex w-[37rem] flex-1 flex-col overflow-hidden">
-     <CourseTabs
-      course={course}
-      previousTab={previousTab}
-      activeTab={activeTab}
-     />
+    <div className="me-auto h-14 max-w-[calc(100vw-theme(spacing.24))] rounded-full bg-gray-900 p-1.5 text-gray-50 sm:max-w-xl">
+     <ScrollableArea className="h-full rounded-full">
+      <div className="mx-auto flex h-full w-max">
+       {course.tabs.map((tab, index) => (
+        <button
+         onClick={() => setActiveTab(index)}
+         key={tab.id}
+         className={cn(
+          "relative flex items-center justify-center gap-2 rounded-full px-5",
+         )}
+        >
+         {activeTabProps.id === tab.id && (
+          <motion.div
+           className="bg-primary absolute inset-0"
+           layoutId="root"
+           style={{ borderRadius: 50 }}
+           transition={{ duration: 0.7, type: "spring" }}
+          />
+         )}
+         <span className="relative">{tab.name}</span>
+        </button>
+       ))}
+      </div>
+     </ScrollableArea>
+    </div>
+    <div className="flex flex-1 flex-col overflow-hidden">
+     <div className="mb-2 flex items-center gap-2 text-xl font-medium">
+      <div className="relative size-7">
+       <AnimatePresence initial={false} mode="popLayout">
+        <motion.div
+         className="size-7"
+         initial={{ scaleX: 0 }}
+         animate={{ scaleX: 1 }}
+         exit={{ scaleX: 0 }}
+         key={activeTab}
+        >
+         {activeTabProps.icon}
+        </motion.div>
+       </AnimatePresence>
+      </div>
+      <div className="relative flex-1">
+       <AnimatePresence mode="popLayout">
+        <motion.h3
+         initial={{ opacity: 0 }}
+         animate={{ opacity: 1 }}
+         exit={{ opacity: 0 }}
+         key={activeTab}
+         className="text-lg font-medium lg:text-2xl"
+        >
+         {activeTabProps.title}
+        </motion.h3>
+       </AnimatePresence>
+      </div>
+     </div>
+     <div className="mt-2 flex flex-1">
+      <AnimatePresence mode="popLayout">
+       <motion.div
+        className="flex max-w-2xl flex-1"
+        transition={{ duration: 0.5 }}
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 30 }}
+        key={activeTabProps.id}
+       >
+        <CurrentTab />
+       </motion.div>
+      </AnimatePresence>
+     </div>
     </div>
    </div>
+
    <CourseDetails course={course} />
   </div>
- );
-}
-
-type CourseTabsProps = {
- course: CourseProps;
- activeTab: number;
- previousTab: number;
-};
-
-function CourseTabs({ course, activeTab, previousTab }: CourseTabsProps) {
- const scope = useRef(null);
- const { contextSafe } = useGSAP(() => {}, { scope });
- const activeTabProps = course.tabs[activeTab];
- const animateOutIn = contextSafe(() => {
-  //@ts-ignore
-  gsap.fromTo(
-   ".tab",
-   {
-    opacity: (index) => (index === previousTab ? 1 : 0),
-    y: (index) => (index === previousTab ? 0 : 50),
-    xPercent: (index, target) =>
-     index === activeTab ? index * 100 : +gsap.getProperty(target, "x"),
-   },
-   {
-    y: (index) => (index === activeTab ? 0 : 50),
-    opacity: (index) => (index === activeTab ? 1 : 0),
-   },
-  );
- });
-
- useEffect(() => {
-  animateOutIn();
- }, [activeTab]);
-
- return (
-  <>
-   <div className="mb-2 flex items-center gap-2 text-xl font-medium">
-    <div className="relative size-7">
-     <AnimatePresence initial={false} mode="popLayout">
-      <motion.div
-       className="size-7"
-       initial={{ scaleX: 0 }}
-       animate={{ scaleX: 1 }}
-       exit={{ scaleX: 0 }}
-       key={activeTab}
-      >
-       {activeTabProps.icon}
-      </motion.div>
-     </AnimatePresence>
-    </div>
-    <div className="relative flex-1">
-     <AnimatePresence mode="popLayout">
-      <motion.h3
-       initial={{ opacity: 0 }}
-       animate={{ opacity: 1 }}
-       exit={{ opacity: 0 }}
-       key={activeTab}
-      >
-       {activeTabProps.title}
-      </motion.h3>
-     </AnimatePresence>
-    </div>
-   </div>
-   <div className="flex w-max flex-1" ref={scope}>
-    {course.tabs.map((tab, index) => {
-     switch (tab.type) {
-      case CourseTabsName.INTRODUCTION:
-       return (
-        <CourseCaseContainer
-         key={tab.id}
-         className={cn("tab", { "pointer-events-none": index !== activeTab })}
-        >
-         <CourseIntroduction body={tab.body} logos={tab.logos} />
-        </CourseCaseContainer>
-       );
-      case CourseTabsName.FAQ:
-       return (
-        <CourseCaseContainer
-         key={tab.id}
-         className={cn("tab", { "pointer-events-none": index !== activeTab })}
-        >
-         <CourseFAQ items={tab.items} />
-        </CourseCaseContainer>
-       );
-      case CourseTabsName.TEACHERS:
-       return (
-        <CourseCaseContainer
-         key={tab.id}
-         className={cn("tab", { "pointer-events-none": index !== activeTab })}
-        >
-         <CourseTeachers />
-        </CourseCaseContainer>
-       );
-      case CourseTabsName.CHAPTERS:
-       return (
-        <CourseCaseContainer
-         key={tab.id}
-         className={cn("tab", { "pointer-events-none": index !== activeTab })}
-        >
-         <CourseChapters />
-        </CourseCaseContainer>
-       );
-     }
-    })}
-   </div>
-  </>
  );
 }
 
@@ -329,7 +259,7 @@ function CourseFAQ({ items }: { items: any[] }) {
  }
 
  return (
-  <div className="rounded-5xl relative flex-1 bg-gray-200 py-8">
+  <div className="lg:rounded-5xl relative min-h-96 flex-1 rounded-3xl bg-gray-200 py-8">
    {isScrollable && (
     <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-between py-2">
      <button
@@ -356,12 +286,12 @@ function CourseFAQ({ items }: { items: any[] }) {
       "--bottom": disabled.bottom ? 1 : 0,
      } as CSSProperties
     }
-    className="hidden-scrollbar scroll-area-mask absolute inset-10 flex flex-col gap-5 overflow-auto"
+    className="hidden-scrollbar scroll-area-mask absolute bottom-8 left-5 right-5 top-8 flex flex-col gap-5 overflow-auto lg:inset-10"
    >
     {items.map((item) => (
-     <div key={item.question}>
+     <div className="space-y-1" key={item.question}>
       <div className="font-medium">{item.question}</div>
-      <p className="text-sm font-light text-gray-500">{item.answer}</p>
+      <p className="text-sm/5 font-light text-gray-500">{item.answer}</p>
      </div>
     ))}
    </div>
@@ -369,22 +299,127 @@ function CourseFAQ({ items }: { items: any[] }) {
  );
 }
 
-function CourseTeachers() {
- return "<CourseCaseContainer>CourseTeachers</CourseCaseContainer>";
-}
-
-function CourseChapters() {
- return "<CourseCaseContainer>CourseChapters</CourseCaseContainer>";
-}
-
-function CourseCaseContainer({
- children,
- className,
- ...props
-}: PropsWithChildren & HTMLAttributes<HTMLDivElement>) {
+function CourseTeachers({
+ teacher: { name, cv, graduated },
+}: {
+ teacher: {
+  name: string;
+  graduated: string;
+  cv: string[];
+ };
+}) {
  return (
-  <div {...props} className={cn("flex w-[37rem]", className)}>
-   {children}
+  <div className="mt-5 flex flex-col gap-5">
+   <div className="flex gap-2">
+    <UserIcon />
+    <span className="text-gray-500">نام:</span>
+    <strong>{name}</strong>
+   </div>
+   <div className="flex gap-2">
+    <GraduationCapIcon />
+    <span className="text-gray-500">فارق التحصیل:</span>
+    <strong>{graduated}</strong>
+   </div>
+   <div className="flex gap-2">
+    <HistoryIcon />
+    <div>
+     <span className="text-gray-500">سابقه فعالیت:</span>
+     <ul className="text-sm font-medium">
+      {cv.map((item) => (
+       <li key={item}>{item}</li>
+      ))}
+     </ul>
+    </div>
+   </div>
+  </div>
+ );
+}
+
+function CourseChapters({
+ chapters,
+}: {
+ chapters: { name: string; titles: string[] }[];
+}) {
+ const container = useRef<HTMLDivElement | null>(null);
+ const [disabled, setDisabled] = useState({
+  top: true,
+  bottom: false,
+ });
+
+ const isScrollable = useMemo(() => {
+  if (!container.current) return false;
+  const { height } = container.current!.getBoundingClientRect();
+  return height < container.current?.scrollHeight;
+ }, [container.current?.scrollHeight]);
+
+ function scrollTo(by: number) {
+  container.current!.scrollTo({
+   top: container.current!.scrollTop + by,
+   behavior: "smooth",
+  });
+ }
+
+ useEffect(() => {
+  if (!container.current) return;
+  container.current!.addEventListener("scroll", handleScroll);
+  return () => {
+   if (!container.current) return;
+   container.current!.removeEventListener("scroll", handleScroll);
+  };
+ }, [container.current]);
+
+ function handleScroll() {
+  const { height } = container.current!.getBoundingClientRect();
+  setDisabled({
+   top: container.current!.scrollTop <= 0,
+   bottom:
+    container.current!.scrollTop + height >= container.current!.scrollHeight,
+  });
+ }
+
+ return (
+  <div className="lg:rounded-5xl relative min-h-[30rem] flex-1 rounded-3xl bg-gray-200 py-8">
+   {isScrollable && (
+    <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-between py-2">
+     <button
+      disabled={disabled.top}
+      className="pointer-events-auto transition duration-300 disabled:opacity-30"
+      onClick={() => scrollTo(-100)}
+     >
+      <ChevronUpIcon />
+     </button>
+     <button
+      disabled={disabled.bottom}
+      className="pointer-events-auto transition duration-300 disabled:opacity-30"
+      onClick={() => scrollTo(100)}
+     >
+      <ChevronDownIcon />
+     </button>
+    </div>
+   )}
+   <div
+    ref={container}
+    style={
+     {
+      "--top": disabled.top ? 1 : 0,
+      "--bottom": disabled.bottom ? 1 : 0,
+     } as CSSProperties
+    }
+    className="hidden-scrollbar absolute bottom-8 left-5 right-5 top-8 flex flex-col gap-5 overflow-auto lg:inset-10"
+   >
+    {chapters.map((chapter) => (
+     <div className="space-y-1" key={chapter.name}>
+      <div className="font-medium">{chapter.name}</div>
+      <ul className="text-sm/6 text-gray-500">
+       {chapter.titles.map((title) => (
+        <li key={title}>
+         <span className="font-bold text-black">-</span> {title}
+        </li>
+       ))}
+      </ul>
+     </div>
+    ))}
+   </div>
   </div>
  );
 }
@@ -396,10 +431,13 @@ type CourseDetailsProps = {
 function CourseDetails({ course }: CourseDetailsProps) {
  const priceWithDiscount = course.price * course.discount - course.price;
  return (
-  <div className="flex w-96 flex-shrink-0 flex-col gap-5">
+  <div className="flex flex-col gap-5 lg:w-96">
    {course.details.map((value) => (
-    <div className="flex w-full items-start" key={value.name}>
-     <div className="flex w-48 flex-shrink-0 items-center gap-3 text-sm font-medium text-blue-950">
+    <div
+     className="flex w-full flex-wrap items-start gap-1 sm:flex-row"
+     key={value.name}
+    >
+     <div className="flex w-48 flex-shrink-0 items-center gap-1 text-sm font-medium text-blue-950 sm:gap-3">
       <div className="size-5">
        {COURSE_DETAIL_ATTRIBUTES.get(value.name)?.icon}
       </div>
@@ -412,7 +450,7 @@ function CourseDetails({ course }: CourseDetailsProps) {
     </div>
    ))}
    <div className="mt-auto flex flex-col space-y-4 pt-16">
-    <div className="flex h-16 items-center justify-between rounded-full border-2 border-gray-200 px-8 font-medium">
+    <div className="rounded-5xl flex min-h-16 flex-wrap items-center justify-between gap-5 gap-y-2 border-2 border-gray-200 px-8 py-2 font-medium">
      <span>هزینه دوره:</span>
      <div className="flex flex-col">
       <span

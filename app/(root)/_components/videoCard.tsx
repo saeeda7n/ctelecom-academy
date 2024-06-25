@@ -10,7 +10,7 @@ export function VideoCard() {
  let [isOpen, setIsOpen] = useState(false);
 
  return (
-  <section className="container -mb-24">
+  <section className="container lg:-mb-24">
    <div className="relative overflow-hidden rounded-[min(5rem,5vw)]">
     <Image
      className="relative z-20 w-full"

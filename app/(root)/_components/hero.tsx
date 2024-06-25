@@ -18,43 +18,73 @@ const Hero = () => {
  const back = useRef(null);
  const laptop = useRef(null);
  const phoneContainer = useRef(null);
+
  useGSAP(
   () => {
-   const laptopWidth = +gsap.getProperty(laptop.current, "width");
-   const phoneContainerWidth = +gsap.getProperty(
-    phoneContainer.current,
-    "width",
+   const mm = gsap.matchMedia(scope);
+   mm.add(
+    {
+     isMobile: `(max-width: 1023px)`,
+     isDesktop: `(min-width: 1024px)`,
+    },
+    (context) => {
+     const { isMobile, isDesktop } = context.conditions as {
+      [key: string]: boolean;
+     };
+
+     const laptopWidth = Number(gsap.getProperty(laptop.current, "width"));
+     const phoneContainerWidth = Number(
+      gsap.getProperty(phoneContainer.current, "width"),
+     );
+
+     if (isDesktop) {
+      gsap.set(phoneContainer.current, {
+       x: laptopWidth / 2 + (phoneContainerWidth / 2) * 0.5,
+       scale: 1.5,
+      });
+      gsap.set(laptop.current, {
+       x: laptopWidth / 2 + (phoneContainerWidth / 2) * 0.5,
+       opacity: 0,
+      });
+     }
+
+     if (isMobile) {
+      gsap.set(laptop.current, {
+       x: laptopWidth / 2 + phoneContainerWidth / 2,
+       opacity: 0,
+      });
+      gsap.set(phoneContainer.current, {
+       transformOrigin: "bottom left",
+      });
+     }
+
+     gsap.set(front.current, { height: "100%" });
+     gsap
+      .timeline({
+       scrollTrigger: {
+        trigger: scope.current,
+        pin: true,
+        scrub: 1,
+        end: () => "+=1500",
+        pinSpacing: true,
+       },
+      })
+      .to(front.current, { height: "0%", duration: 1 }, 0)
+      .to(laptop.current, { x: 0, opacity: 1, duration: 1 }, 1)
+      .to(
+       phoneContainer.current,
+       {
+        duration: 1,
+        x: isMobile
+         ? -Math.abs(laptopWidth / 2 - phoneContainerWidth / 2) -
+           phoneContainerWidth / 10
+         : 0,
+        scale: isMobile ? 0.65 : 1,
+       },
+       1,
+      );
+    },
    );
-   gsap.set(laptop.current, {
-    x: laptopWidth / 2 + phoneContainerWidth / 2 + 30,
-    opacity: 0,
-   });
-   gsap.set(front.current, { height: "100%" });
-   gsap
-    .timeline({
-     scrollTrigger: {
-      trigger: scope.current,
-      pin: true,
-      scrub: 1,
-      end: () => "+=1500",
-      pinSpacing: true,
-     },
-    })
-    .to(front.current, { height: "0%", duration: 1 }, 0)
-    .to(
-     laptop.current,
-     { x: phoneContainerWidth / 2, opacity: 1, duration: 1 },
-     1,
-    )
-    .to(
-     phoneContainer.current,
-     {
-      duration: 1,
-      x: -(laptopWidth / 2 + 30),
-      scale: 0.65,
-     },
-     1,
-    );
   },
   { scope, dependencies: [front] },
  );
@@ -62,20 +92,28 @@ const Hero = () => {
  return (
   <section
    ref={scope}
-   className="flex min-h-[max(100lvh,44rem)] items-center overflow-hidden py-20"
+   className="flex min-h-[max(100lvh,44rem)] overflow-hidden py-20"
   >
-   <div className="container flex flex-col items-center justify-center gap-10">
-    <div className="relative">
-     <div className="flex items-end justify-center gap-5">
-      <Image
-       ref={laptop}
-       src={"/assets/images/laptop.png"}
-       width={825}
-       height={526}
-       alt={"لپ تاپ"}
-       loading="eager"
-      />
-      <div ref={phoneContainer} className="absolute w-72 origin-bottom-right">
+   <div className="flex flex-1 flex-col items-center justify-center gap-10">
+    <div className="relative w-full max-w-[100vw]">
+     <div className="flex items-end justify-center gap-5 max-lg:min-h-[max(calc(100lvh-theme(spacing.96)),42rem)]">
+      <div className="w-[44rem] flex-shrink-0 lg:w-[max(40vw,48rem)]">
+       <Image
+        ref={laptop}
+        src={"/assets/images/laptop.png"}
+        width={825}
+        height={526}
+        alt={"لپ تاپ"}
+        loading="eager"
+        draggable={false}
+        className=""
+       />
+      </div>
+
+      <div
+       ref={phoneContainer}
+       className="w-[max(30vw,30vh)] flex-shrink-0 origin-bottom-right max-lg:absolute lg:w-[max(10vw,12rem)]"
+      >
        <Image
         className="w-full object-center"
         ref={back}
@@ -85,8 +123,8 @@ const Hero = () => {
         width={296}
         loading="eager"
        />
-       <div ref={front} className="absolute left-0 top-0 flex">
-        <div className="overflow-hidden">
+       <div ref={front} className="absolute left-0 top-0 flex w-full">
+        <div className="w-full overflow-hidden">
          <Image
           src={"/assets/images/phone-front.png"}
           alt={"جلوی گوشی"}
@@ -101,13 +139,13 @@ const Hero = () => {
      </div>
     </div>
     <div className="space-y-2 text-center">
-     <h2 className="space-x-2">
+     <h2 className="space-x-2 text-[clamp(1rem,1vw,5rem)] font-medium">
       برگزاری دوره رایگان تعمیرات موبایل و{" "}
       <SparkleArea className="text-primary">
        <strong>لپ تاپ</strong>
       </SparkleArea>
      </h2>
-     <p className="text-sm font-light">
+     <p className="text-[clamp(0.75rem,0.7vw,3rem)] font-light">
       توسط مجرب ترین اساتید فعال در حوزه تعمیرات موبایل ویژه دبیرستان و هنرستان
      </p>
     </div>
@@ -139,9 +177,6 @@ function SparkleArea({
    <AnimatedSparkle area={area} />
    <AnimatedSparkle area={area} />
    <AnimatedSparkle area={area} />
-   <AnimatedSparkle area={area} />
-   <AnimatedSparkle area={area} />
-   <AnimatedSparkle area={area} />
   </div>
  );
 }
@@ -154,7 +189,7 @@ function AnimatedSparkle({
  function createRandomConfigs() {
   //@ts-ignore
   return {
-   speed: gsap.utils.random(0.3, 2.5),
+   speed: gsap.utils.random(0.6, 2.5),
    rotate: gsap.utils.random(-360, 360),
    delay: gsap.utils.random(0.1, 0.3),
    scale: gsap.utils.random(0.1, 1.2),
