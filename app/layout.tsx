@@ -10,7 +10,7 @@ const outfit = Outfit({ variable: "--outfit-font", subsets: ["latin"] });
 export const metadata: Metadata = {
  title: "آکادمی سی تلکام | آموزش تعمیرات گوشی موبایل و لپ تاپ",
  description:
-  "آکادمی سی تلکام | آموزش تعمیرات گوشی موبایل و لپ تاپ رایگان برای عموم افراد مستعد و علاقه مند",
+  "آموزش تعمیرات گوشی موبایل و لپ تاپ رایگان برای عموم افراد مستعد و علاقه مند",
  keywords: [
   "آموزش تعمیرات گوشی موبایل رایگان",
   "سی تلکام",
@@ -19,7 +19,17 @@ export const metadata: Metadata = {
   "آموزش تعمیرات تبلت",
   "آموزشگاه سی تلکام",
   "آکادمی سی تلکام",
+  "آموزش تعمیرات موبایل",
+  "آموزشگاه",
+  "ثبت نام آنلاین",
+  "آموزش حین کار",
  ],
+ robots: {
+  index: true,
+  follow: true,
+  googleBot: { index: true, follow: true, noarchive: true },
+  noarchive: true,
+ },
 };
 
 type RootLayoutProps = Readonly<PropsWithChildren>;

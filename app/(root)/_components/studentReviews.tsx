@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React, { forwardRef, useRef } from "react";
 import {
  ChevronLeftIcon,
  ChevronRightIcon,
@@ -91,6 +91,7 @@ const comments: ReviewCardProps[] = [
 
 export function StudentReviews() {
  const target = useRef<HTMLDivElement | null>(null);
+ const commentsContainer = useRef<HTMLDivElement | null>(null);
  const { contextSafe } = useGSAP();
 
  const scroll = contextSafe((x: number) => {
@@ -102,10 +103,12 @@ export function StudentReviews() {
  useGesture(
   {
    onDrag: ({ delta }) => {
+    if (window.innerWidth < 1024) return;
     const [x] = delta;
     if (target.current) target.current!.scrollLeft += -x;
    },
    onDragEnd: ({ velocity, direction }) => {
+    if (window.innerWidth < 1024) return;
     const [x] = velocity;
     const [dX] = direction;
     if (!target.current) return;
@@ -116,7 +119,12 @@ export function StudentReviews() {
  );
 
  function slideBy(sign: number) {
-  scroll(target.current!.scrollLeft + target.current!.clientWidth * sign);
+  const nodes = commentsContainer.current!.childNodes.length;
+  const width = commentsContainer.current?.clientWidth!;
+  const boxSize = width / nodes;
+  const left = target.current!.scrollLeft;
+  const index = Math.round(Math.abs(left / boxSize));
+  scroll(-(index + sign) * boxSize);
  }
 
  return (
@@ -128,7 +136,7 @@ export function StudentReviews() {
     </div>
 
     <div className="hidden-scrollbar overflow-auto rounded-2xl" ref={target}>
-     <div className="flex w-max gap-5">
+     <div className="flex w-max gap-5" ref={commentsContainer}>
       {comments.map((comment) => (
        <ReviewCard {...comment} key={comment.id} />
       ))}
@@ -136,13 +144,13 @@ export function StudentReviews() {
     </div>
     <div className="flex justify-end gap-2">
      <button
-      onClick={() => slideBy(1)}
+      onClick={() => slideBy(-1)}
       className="flex size-12 items-center justify-center rounded-full bg-white lg:size-14"
      >
       <ChevronRightIcon />
      </button>
      <button
-      onClick={() => slideBy(-1)}
+      onClick={() => slideBy(1)}
       className="flex size-12 items-center justify-center rounded-full bg-white lg:size-14"
      >
       <ChevronLeftIcon />
@@ -177,9 +185,15 @@ function RatesStart({ rate }: { rate: number }) {
  );
 }
 
-function ReviewCard({ author, id, content }: ReviewCardProps) {
+const ReviewCard = forwardRef(function ReviewCard(
+ { author, id, content }: ReviewCardProps,
+ ref: any,
+) {
  return (
-  <article className="flex w-96 select-none flex-col gap-4 rounded-2xl bg-gray-200 p-3 pb-5">
+  <article
+   ref={ref}
+   className="flex w-96 select-none flex-col gap-4 rounded-2xl bg-gray-200 p-3 pb-5"
+  >
    <header className="flex gap-2">
     <Image
      width={128}
@@ -201,4 +215,4 @@ function ReviewCard({ author, id, content }: ReviewCardProps) {
    </div>
   </article>
  );
-}
+});

@@ -4,7 +4,7 @@ import { InstagramIcon, LinkedinIcon } from "lucide-react";
 const AboutUs = () => {
  return (
   <section className="container flex flex-col gap-8 lg:flex-row lg:gap-10 xl:gap-16 2xl:gap-20">
-   <div className="flex-1 space-y-6">
+   <div id="about" className="flex-1 space-y-6">
     <h3 className="text-lg font-medium lg:text-2xl">درباره ما</h3>
     <div>
      <p className="text-sm/6 text-gray-500 lg:text-base/7">
@@ -25,7 +25,7 @@ const AboutUs = () => {
      </p>
     </div>
    </div>
-   <div className="flex-1 space-y-6 lg:max-w-80">
+   <div id={"contact"} className="flex-1 space-y-6 lg:max-w-80">
     <h3 className="text-lg font-medium lg:text-2xl">تماس با ما</h3>
     <div className="w-full">
      <ul className="flex w-full flex-col flex-wrap gap-5 sm:flex-row lg:flex-col">

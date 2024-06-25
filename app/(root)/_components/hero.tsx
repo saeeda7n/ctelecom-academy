@@ -112,7 +112,7 @@ const Hero = () => {
         alt={"لپ تاپ"}
         loading="eager"
         draggable={false}
-        className=""
+        className="w-full"
        />
       </div>
 

@@ -19,6 +19,7 @@ export function VideoCard() {
      height={800}
      draggable={false}
      alt="mobile frame"
+     loading="eager"
     />
 
     <div className="absolute inset-[1vw] overflow-hidden rounded-[min(4rem,6vw)] 2xl:inset-[min(1rem,0.6vw)] 2xl:rounded-[min(5rem,5vw)]">

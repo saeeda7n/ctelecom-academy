@@ -1,8 +1,12 @@
 "use client";
-import React, { PropsWithChildren, useRef, useState } from "react";
+import React, { PropsWithChildren } from "react";
 import { motion } from "framer-motion";
+import { cn } from "@/libs/utils";
 
-const HeaderItem = ({ children }: PropsWithChildren) => {
+const HeaderItem = ({
+ children,
+ className,
+}: PropsWithChildren & { className?: string }) => {
  const arrow = {
   initial: { pathLength: 0 },
   animate: { pathLength: 1 },
@@ -11,7 +15,7 @@ const HeaderItem = ({ children }: PropsWithChildren) => {
   <motion.li
    initial="initial"
    whileHover="animate"
-   className="space-y-0.5 pt-2"
+   className={cn("space-y-0.5 pt-2", className)}
   >
    {children}
    <div className="w-full">

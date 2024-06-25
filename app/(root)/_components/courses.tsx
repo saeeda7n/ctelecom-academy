@@ -43,7 +43,7 @@ export function Courses() {
  }
 
  return (
-  <section className="relative flex flex-col overflow-hidden">
+  <section id="courses" className="relative flex flex-col overflow-hidden">
    <div className="container flex flex-col gap-8">
     <div className="mx-auto max-w-full rounded-full bg-gray-900 p-3 text-gray-50 sm:max-w-96">
      <ScrollableArea className="select-none rounded-full">
