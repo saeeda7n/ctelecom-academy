@@ -6,20 +6,21 @@ import { gsap } from "@/libs/gsap";
 import colors from "tailwindcss/colors";
 
 const Intro = () => {
+ const [counter, setCounter] = useState(5999);
  const scope = useRef(null);
  const [closed, setClosed] = useState(false);
- const [counter, setCounter] = useState(5069);
  const { contextSafe } = useGSAP({ scope });
  const animateOut = contextSafe(() => {
+  // gsap.set(".numbers", { delay: 0, animationDelay: 0, transitionDelay: 0 });
   gsap
    .timeline({ onComplete: () => setClosed(true) })
    .to("span", { delay: 1, opacity: 1 })
    .to(".counter", {
-    delay: 1,
+    delay: 1.5,
     scale: 20,
     duration: 0.7,
     background: colors.gray["50"],
-    ease: "expo.inOut",
+    ease: "expo.out",
    })
    .to(scope.current, { delay: 0.3, opacity: 0, pointerEvents: "none" });
  });
@@ -54,7 +55,9 @@ const Intro = () => {
         key={index}
        >
         <motion.div
+         className={"numbers"}
          transition={{
+          delay: 0.1 * (array.length - index),
           duration: 0.6,
           type: "spring",
          }}
