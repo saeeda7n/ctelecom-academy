@@ -7,12 +7,12 @@ import colors from "tailwindcss/colors";
 
 const Intro = () => {
  const scope = useRef(null);
- const counterId = useId();
+ const [closed, setClosed] = useState(false);
  const [counter, setCounter] = useState(5069);
  const { contextSafe } = useGSAP({ scope });
  const animateOut = contextSafe(() => {
   gsap
-   .timeline()
+   .timeline({ onComplete: () => setClosed(true) })
    .to("span", { delay: 1, opacity: 1 })
    .to(".counter", {
     delay: 1,
@@ -33,6 +33,8 @@ const Intro = () => {
    ref={scope}
    className="fixed inset-0 z-[66] flex min-h-lvh items-center justify-center overflow-hidden bg-[#141f78]"
   >
+   {!closed && <style>{`html {overflow: hidden}`}</style>}
+
    <div className="flex flex-col">
     <span className="text-center text-lg font-medium text-gray-50 opacity-0">
      متخصص

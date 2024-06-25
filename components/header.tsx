@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import HeaderItem from "@/components/headerItem";
 
 const items = [
  { name: "دوره ها", url: "/" },
@@ -22,12 +23,11 @@ export const Header = () => {
      alt="آکادمی سی تلکام"
      title="آکادمی سی تلکام"
     />
-
     <ul className="ms-14 flex gap-8">
      {items.map((item) => (
-      <li key={item.name}>
+      <HeaderItem key={item.name}>
        <Link href={item.url}>{item.name}</Link>
-      </li>
+      </HeaderItem>
      ))}
     </ul>
 

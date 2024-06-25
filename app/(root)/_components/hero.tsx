@@ -96,7 +96,7 @@ const Hero = () => {
   >
    <div className="flex flex-1 flex-col items-center justify-center gap-10">
     <div className="relative w-full max-w-[100vw]">
-     <div className="flex items-end justify-center gap-5 max-lg:min-h-[max(calc(100lvh-theme(spacing.96)),42rem)]">
+     <div className="flex items-end justify-center gap-5 max-lg:min-h-[max(calc(100lvh-theme(spacing.96)),24rem)]">
       <div className="w-[44rem] flex-shrink-0 lg:w-[max(40vw,48rem)]">
        <Image
         ref={laptop}
