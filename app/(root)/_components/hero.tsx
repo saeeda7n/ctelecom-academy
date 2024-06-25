@@ -24,31 +24,21 @@ const Hero = () => {
    const mm = gsap.matchMedia(scope);
    mm.add(
     {
-     isMobile: `(max-width: 1023px)`,
-     isDesktop: `(min-width: 1024px)`,
+     sm: `(max-width: 623px)`,
+     md: `(max-width: 1023px)`,
+     lg: `(min-width: 1024px)`,
     },
     (context) => {
-     const { isMobile, isDesktop } = context.conditions as {
+     const { sm, lg, md } = context.conditions as {
       [key: string]: boolean;
      };
-
+     gsap.set(front.current, { height: "100%" });
      const laptopWidth = Number(gsap.getProperty(laptop.current, "width"));
      const phoneContainerWidth = Number(
       gsap.getProperty(phoneContainer.current, "width"),
      );
 
-     if (isDesktop) {
-      gsap.set(phoneContainer.current, {
-       x: laptopWidth / 2 + (phoneContainerWidth / 2) * 0.5,
-       scale: 1.5,
-      });
-      gsap.set(laptop.current, {
-       x: laptopWidth / 2 + (phoneContainerWidth / 2) * 0.5,
-       opacity: 0,
-      });
-     }
-
-     if (isMobile) {
+     if (md) {
       gsap.set(laptop.current, {
        x: laptopWidth / 2 + phoneContainerWidth / 2,
        opacity: 0,
@@ -58,7 +48,21 @@ const Hero = () => {
       });
      }
 
-     gsap.set(front.current, { height: "100%" });
+     if (lg) {
+      gsap.set(phoneContainer.current, {
+       x: laptopWidth / 2 + (phoneContainerWidth / 2) * 0.5,
+       scale: 1.5,
+      });
+      gsap.set(laptop.current, {
+       x: laptopWidth / 2 + (phoneContainerWidth / 2) * 0.5,
+       opacity: 0,
+      });
+     }
+     if (sm)
+      gsap.set(phoneContainer.current, {
+       transformOrigin: "bottom center",
+      });
+
      gsap
       .timeline({
        scrollTrigger: {
@@ -75,11 +79,13 @@ const Hero = () => {
        phoneContainer.current,
        {
         duration: 1,
-        x: isMobile
-         ? -Math.abs(laptopWidth / 2 - phoneContainerWidth / 2) -
-           phoneContainerWidth / 10
-         : 0,
-        scale: isMobile ? 0.65 : 1,
+        x: sm
+         ? 0
+         : md
+           ? -Math.abs(laptopWidth / 2 - phoneContainerWidth / 2) -
+             phoneContainerWidth / 10
+           : 0,
+        scale: md ? 0.65 : 1,
        },
        1,
       );
@@ -94,8 +100,8 @@ const Hero = () => {
    ref={scope}
    className="flex min-h-[max(100lvh,44rem)] overflow-hidden py-20"
   >
-   <div className="flex flex-1 flex-col items-center justify-center gap-10">
-    <div className="relative w-full max-w-[100vw]">
+   <div className="flex max-w-[100vw] flex-1 flex-col items-center justify-center gap-10">
+    <div className="relative">
      <div className="flex items-end justify-center gap-5 max-lg:min-h-[max(calc(100lvh-theme(spacing.96)),24rem)]">
       <div className="w-[44rem] flex-shrink-0 lg:w-[max(40vw,48rem)]">
        <Image
