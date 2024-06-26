@@ -367,13 +367,22 @@ export const COURSES: CourseProps[] = [
      },
     ],
    },
-   // {
-   //  id: 3,
-   //  name: "اساتید",
-   //  title: "اساتید",
-   //  icon: <UsersIcon className="size-[inherit]" />,
-   //  type: CourseTabsName.TEACHERS,
-   // },
+   {
+    id: 3,
+    name: "اساتید",
+    title: "اساتید",
+    icon: <UsersIcon className="size-[inherit]" />,
+    type: CourseTabsName.TEACHERS,
+    teacher: {
+     name: "داریوش سلامی",
+     graduated: "فارغ التحصیل دانشگاه شهید رجایی",
+     cv: [
+      "مدیر گارانتی و فنی شرکت های کامپیوتری",
+      "20 سال سابقه تعمیرات لپ تاپ",
+      "17 سال سابقه تدریس در آموزشگاه های تعمیرات لپ تاپ",
+     ],
+    },
+   },
    {
     id: 4,
     name: "سوالات متداول",

@@ -56,7 +56,7 @@ export function Courses() {
         >
          {activeTab === index && (
           <motion.div
-           className="bg-primary absolute inset-0"
+           className="absolute inset-0 bg-primary"
            layoutId="courseTitle"
            style={{ borderRadius: 50 }}
            transition={{ duration: 0.7, type: "spring" }}
@@ -117,7 +117,7 @@ function CourseContainer({ course }: CourseDetailsProps) {
  }
 
  return (
-  <div className="rounded-5xl lg:rounded-7xl flex w-full flex-col justify-between gap-10 overflow-hidden bg-gray-100 p-5 md:flex-row lg:p-10">
+  <div className="flex w-full flex-col justify-between gap-10 overflow-hidden rounded-5xl bg-gray-100 p-5 md:flex-row lg:rounded-7xl lg:p-10">
    <div className="flex flex-1 flex-col gap-8">
     <div className="me-auto h-14 max-w-[calc(100vw-theme(spacing.24))] rounded-full bg-gray-900 p-1.5 text-gray-50 sm:max-w-xl">
      <ScrollableArea className="h-full rounded-full">
@@ -132,7 +132,7 @@ function CourseContainer({ course }: CourseDetailsProps) {
         >
          {activeTabProps.id === tab.id && (
           <motion.div
-           className="bg-primary absolute inset-0"
+           className="absolute inset-0 bg-primary"
            layoutId="root"
            style={{ borderRadius: 50 }}
            transition={{ duration: 0.7, type: "spring" }}
@@ -259,7 +259,7 @@ function CourseFAQ({ items }: { items: any[] }) {
  }
 
  return (
-  <div className="lg:rounded-5xl relative min-h-96 flex-1 rounded-3xl bg-gray-200 py-8">
+  <div className="relative min-h-96 flex-1 rounded-3xl bg-gray-200 py-8 lg:rounded-5xl">
    {isScrollable && (
     <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-between py-2">
      <button
@@ -317,7 +317,7 @@ function CourseTeachers({
    </div>
    <div className="flex gap-2">
     <GraduationCapIcon />
-    <span className="text-gray-500">فارق التحصیل:</span>
+    <span className="text-gray-500">فارغ التحصیل:</span>
     <strong>{graduated}</strong>
    </div>
    <div className="flex gap-2">
@@ -378,7 +378,7 @@ function CourseChapters({
  }
 
  return (
-  <div className="lg:rounded-5xl relative min-h-[30rem] flex-1 rounded-3xl bg-gray-200 py-8">
+  <div className="relative min-h-[30rem] flex-1 rounded-3xl bg-gray-200 py-8 lg:rounded-5xl">
    {isScrollable && (
     <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-between py-2">
      <button
@@ -450,7 +450,7 @@ function CourseDetails({ course }: CourseDetailsProps) {
     </div>
    ))}
    <div className="mt-auto flex flex-col space-y-4 pt-16">
-    <div className="rounded-5xl flex min-h-16 flex-wrap items-center justify-between gap-5 gap-y-2 border-2 border-gray-200 px-8 py-2 font-medium">
+    <div className="flex min-h-16 flex-wrap items-center justify-between gap-5 gap-y-2 rounded-5xl border-2 border-gray-200 px-8 py-2 font-medium">
      <span>هزینه دوره:</span>
      <div className="flex flex-col">
       <span
@@ -465,7 +465,7 @@ function CourseDetails({ course }: CourseDetailsProps) {
       </span>
      </div>
     </div>
-    <a className="bg-primary flex h-16 items-center justify-center rounded-full font-medium text-gray-50">
+    <a className="flex h-16 items-center justify-center rounded-full bg-primary font-medium text-gray-50">
      ثبت نام کنید
     </a>
    </div>

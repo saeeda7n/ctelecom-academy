@@ -38,7 +38,7 @@ const Intro = () => {
 
    <div className="flex flex-col">
     <span className="text-center text-lg font-medium text-gray-50 opacity-0">
-     متخصص
+     شما
     </span>
     <div
      dir="ltr"
@@ -71,6 +71,9 @@ const Intro = () => {
        </AnimatePresence>
       ))}
     </div>
+    <span className="text-center text-lg font-medium text-gray-50 opacity-0">
+     اُمین متخصص باشید
+    </span>
    </div>
   </div>
  );
