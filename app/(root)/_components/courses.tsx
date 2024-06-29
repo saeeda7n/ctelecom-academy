@@ -465,7 +465,11 @@ function CourseDetails({ course }: CourseDetailsProps) {
       </span>
      </div>
     </div>
-    <a className="flex h-16 items-center justify-center rounded-full bg-primary font-medium text-gray-50">
+    <a
+     href="https://ctelecom.ir/educationregister"
+     target={"_blank"}
+     className="flex h-16 items-center justify-center rounded-full bg-primary font-medium text-gray-50"
+    >
      ثبت نام کنید
     </a>
    </div>

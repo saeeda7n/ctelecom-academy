@@ -65,7 +65,9 @@ export const Header = () => {
       </HeaderItem>
      ))}
      <HeaderItem className="sm:ms-auto">
-      <Link href="/">ثبت نام</Link>
+      <a href="https://ctelecom.ir/educationregister" target={"_blank"}>
+       ثبت نام
+      </a>
      </HeaderItem>
     </ul>
    </div>

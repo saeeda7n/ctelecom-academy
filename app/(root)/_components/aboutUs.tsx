@@ -39,7 +39,7 @@ const AboutUs = () => {
       </li>
       <li dir="ltr">
        <a
-        className="font-outfit flex h-16 items-center justify-center gap-2 rounded-full border-2 px-8 text-lg font-medium text-gray-950"
+        className="flex h-16 items-center justify-center gap-2 rounded-full border-2 px-8 font-outfit text-lg font-medium text-gray-950"
         href="//www.instagram.com/ctelecom.academy"
         target={"_blank"}
        >
@@ -49,8 +49,8 @@ const AboutUs = () => {
       </li>
       <li dir="ltr">
        <a
-        className="font-outfit flex h-16 items-center justify-center gap-2 rounded-full border-2 px-8 text-left text-lg font-medium text-blue-950"
-        href="//www.instagram.com/ctelecom.academy"
+        className="flex h-16 items-center justify-center gap-2 rounded-full border-2 px-8 text-left font-outfit text-lg font-medium text-blue-950"
+        href="https://www.linkedin.com/company/ctelecom-ir/"
         target={"_blank"}
        >
         <LinkedinIcon size={26} />
