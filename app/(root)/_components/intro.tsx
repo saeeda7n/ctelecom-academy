@@ -6,7 +6,7 @@ import { gsap } from "@/libs/gsap";
 import colors from "tailwindcss/colors";
 
 const Intro = () => {
- const [counter, setCounter] = useState(5999);
+ const [counter, setCounter] = useState(7362);
  const scope = useRef(null);
  const [closed, setClosed] = useState(false);
  const { contextSafe } = useGSAP({ scope });
