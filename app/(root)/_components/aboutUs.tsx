@@ -34,7 +34,7 @@ const AboutUs = () => {
         className="flex h-16 items-center justify-center rounded-full bg-emerald-500 px-8 text-lg font-medium text-gray-50"
         href="tel:02152851"
        >
-        021-52-851 داخلی 420
+        02152851 داخلی 420
        </a>
       </li>
       <li dir="ltr">
