@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useId, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/libs/gsap";
@@ -11,7 +11,6 @@ const Intro = () => {
  const [closed, setClosed] = useState(false);
  const { contextSafe } = useGSAP({ scope });
  const animateOut = contextSafe(() => {
-  // gsap.set(".numbers", { delay: 0, animationDelay: 0, transitionDelay: 0 });
   gsap
    .timeline({ onComplete: () => setClosed(true) })
    .to("span", { delay: 1, opacity: 1 })

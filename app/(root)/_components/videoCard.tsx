@@ -102,11 +102,7 @@ function VideoDialog({
         </div>
 
         <video className="w-full rounded-3xl" controls autoPlay={true}>
-         <source
-          src="https://www.w3schools.com/html/mov_bbb.mp4"
-          type="video/mp4"
-         />
-         {/*<source src="movie.ogg" type="video/ogg" />*/}
+         <source src="https://erp.ctelecom.ir/Video.mp4" type="video/mp4" />
          مرورگر شما مناسب پش ویدیو نمیباشد!
         </video>
        </motion.div>

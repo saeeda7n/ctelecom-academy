@@ -30,7 +30,7 @@ const comments: ReviewCardProps[] = [
   content: {
    body:
     "تجهیزات و محیط آموزشی بسیار به روز و حرفه ای بود که آموزش رو برای من بسیار جذاب کرده بود",
-   rate: 3,
+   rate: 4,
   },
   author: {
    image: "/assets/profiles/memoji-2.jpg",
@@ -56,7 +56,7 @@ const comments: ReviewCardProps[] = [
   content: {
    body:
     "من قبلا توی حوزه تعمیرات فعال بودم ولی با این دوره خیلی سطح اطلاعاتم بالاتر رفت و بسیار ضررهای مالی جلوگیری شد",
-   rate: 2,
+   rate: 5,
   },
   author: {
    image: "/assets/profiles/memoji-3.jpg",
@@ -80,7 +80,7 @@ const comments: ReviewCardProps[] = [
   content: {
    body:
     "بهترین اتفاق برای من آشنایی با آموزشگاه سی تلکام بود، چون تونستم با گذارندن دوره تعمیرات موبایل به درآمد خوبی از طریق تعمیرات موبایل برسم.",
-   rate: 4,
+   rate: 5,
   },
   author: {
    image: "/assets/profiles/memoji-women-1.jpg",
@@ -129,7 +129,7 @@ export function StudentReviews() {
 
  return (
   <section className="container">
-   <div className="rounded-5xl lg:rounded-7xl space-y-6 bg-gray-100 px-5 py-4 lg:px-10 lg:py-8">
+   <div className="space-y-6 rounded-5xl bg-gray-100 px-5 py-4 lg:rounded-7xl lg:px-10 lg:py-8">
     <div className="flex items-center gap-2">
      <MessageCircleMore />
      <h3 className="text-lg font-medium lg:text-2xl">نظرات دانشجویان</h3>
