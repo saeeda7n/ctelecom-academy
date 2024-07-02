@@ -7,7 +7,7 @@ const HeaderItem = ({
  children,
  className,
 }: PropsWithChildren & { className?: string }) => {
- const arrow = {
+ const breakingLines = {
   initial: { pathLength: 0 },
   animate: { pathLength: 1 },
  };
@@ -29,7 +29,7 @@ const HeaderItem = ({
       stroke="#f54029"
       strokeLinecap="round"
       strokeWidth="2"
-      variants={arrow}
+      variants={breakingLines}
      />
     </svg>
    </div>

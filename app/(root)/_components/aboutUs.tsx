@@ -25,7 +25,7 @@ const AboutUs = () => {
      </p>
     </div>
    </div>
-   <div id={"contact"} className="flex-1 space-y-6 lg:max-w-80">
+   <div id="contact" className="flex-1 space-y-6 lg:max-w-80">
     <h3 className="text-lg font-medium lg:text-2xl">تماس با ما</h3>
     <div className="w-full">
      <ul className="flex w-full flex-col flex-wrap gap-5 sm:flex-row lg:flex-col">

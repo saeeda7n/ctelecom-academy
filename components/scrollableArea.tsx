@@ -21,7 +21,11 @@ export function ScrollableArea({
   { target, eventOptions: { passive: false } },
  );
  return (
-  <div ref={target} className={cn("hidden-scrollbar overflow-auto", className)}>
+  <div
+   ref={target}
+   className={cn("hidden-scrollbar overflow-auto", className)}
+   {...props}
+  >
    {children}
   </div>
  );

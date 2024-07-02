@@ -103,7 +103,7 @@ function VideoDialog({
 
         <video className="w-full rounded-3xl" controls autoPlay={true}>
          <source src="https://erp.ctelecom.ir/Video.mp4" type="video/mp4" />
-         مرورگر شما مناسب پش ویدیو نمیباشد!
+         مرورگر شما مناسب پخش ویدیو نمیباشد!
         </video>
        </motion.div>
       </DialogPanel>

@@ -5,11 +5,11 @@ import { Footer } from "@/components/footer";
 type LandingLayout = Readonly<PropsWithChildren>;
 const LandingLayout = ({ children }: LandingLayout) => {
  return (
-  <>
+  <React.Fragment>
    <Header />
    {children}
    <Footer />
-  </>
+  </React.Fragment>
  );
 };
 
